@@ -389,6 +389,12 @@ Monitor Two
 Security Team
 ```
 
+这里可以利用exp去提权但是我下面用手动的方式去提权
+
+{% embed url="https://github.com/UncleJ4ck/CVE-2021-41091" %}
+
+该脚本将提示您确认是否在 Docker 容器中的 /bin/bash 上正确设置了 setuid 位。如果答案是“是”，脚本将检查主机是否易受攻击并迭代可用的overlay2文件系统。如果系统确实容易受到攻击，脚本将尝试通过在易受攻击的路径（您在 /bin/bash 上执行 setuid 命令的 Docker 容器的文件系统）中生成 shell 来获取 root 访问权限
+
 我们必须首先使用 findmnt 命令找到容器的路径。
 
 <pre><code>marcus@monitorstwo:/tmp$ findmnt
@@ -424,4 +430,3 @@ bash-5.1# id
 uid=1000(marcus) gid=1000(marcus) euid=0(root) groups=1000(marcus)
 bash-5.1# 
 ```
-
