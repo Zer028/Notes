@@ -1,6 +1,6 @@
 # Format
 
-### 目标探测
+目标探测
 
 Nmap扫描目标全端口的开放端口
 
@@ -59,4 +59,17 @@ Service detection performed. Please report any incorrect results at https://nmap
 
 我们在网站上注册，创建一个子域并将其添加到/etc/hosts。
 
-<figure><img src="../../.gitbook/assets/image (1).png" alt=""><figcaption></figcaption></figure>
+```
+┌──(root㉿kali)-[~/Desktop/TargetDrone/HTB/Format]
+└─# cat /etc/hosts                                                            
+127.0.0.1       localhost
+127.0.1.1       kali
+10.10.11.213    app.microblog.htb
+10.10.11.213    microblog.htb
+10.10.11.213    myawesomeblog.microblog.htb
+```
+
+<figure><img src="../../.gitbook/assets/image (76).png" alt=""><figcaption></figcaption></figure>
+
+添加后，我们可以编辑子域，因此我们尝试创建 XSS。
+
