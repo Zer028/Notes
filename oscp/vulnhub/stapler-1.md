@@ -149,7 +149,7 @@ Nmap done: 1 IP address (1 host up) scanned in 11.89 seconds
 
 这个端口是个http服务，我们直接访问它
 
-<figure><img src="../../.gitbook/assets/image (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 没有找到什么有用的信息，让我们看看666端口，这个端口上运行着什么服务
 

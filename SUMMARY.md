@@ -7,7 +7,7 @@
     * [Telnet匿名登录23](readme/meng-kai-shi-de-di-fang/telnet-ni-ming-deng-lu-23.md)
     * [SMB匿名登录445](readme/meng-kai-shi-de-di-fang/smb-ni-ming-deng-lu-445.md)
   * [HTB](oscp/hackthebox.md)
-    * [Page](readme/hackthebox/page.md)
+    * [Format](readme/hackthebox/format.md)
     * [MonitorsTwo](readme/hackthebox/monitorstwo.md)
   * [Vulnhub](oscp/vulnhub/README.md)
     * [DC-6](oscp/vulnhub/dc-6.md)
