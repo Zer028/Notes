@@ -45,7 +45,7 @@ Nmap done: 1 IP address (1 host up) scanned in 8.23 seconds
 192.168.23.149  wordy
 ```
 
-<figure><img src="../../.gitbook/assets/image (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 看页面没有发现什么有用的信息，我们扫描一下目标的目录
 
