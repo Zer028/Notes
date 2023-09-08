@@ -9,7 +9,6 @@
   * [HTB](oscp/hackthebox.md)
     * [Format](readme/hackthebox/format.md)
     * [MonitorsTwo](readme/hackthebox/monitorstwo.md)
-    * [Sau](readme/hackthebox/sau.md)
   * [Vulnhub](oscp/vulnhub/README.md)
     * [DC-6](oscp/vulnhub/dc-6.md)
     * [Vulnix](readme/vulnhub/vulnix.md)
