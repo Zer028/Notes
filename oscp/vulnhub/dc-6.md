@@ -238,11 +238,11 @@ Trying jens / !lak019b Time: 00:05:48 <===============================       > (
 
 可以看到爆破出一个用户名的密码，接下来我们用这个用户名登陆一下
 
-<figure><img src="../../.gitbook/assets/image (71).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (71) (1).png" alt=""><figcaption></figcaption></figure>
 
 成功登录，让我们看看有什么可以利用的
 
-<figure><img src="../../.gitbook/assets/image (72).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (72) (1).png" alt=""><figcaption></figcaption></figure>
 
 Activity monitor这个插件我们去搜一下
 
@@ -309,11 +309,11 @@ PoC:
 
 所以我们要先访问So we visit wordy/wp-admin/admin.php？page=plainview\_activity\_monitor\&tab=activity\_tools这个页面
 
-<figure><img src="../../.gitbook/assets/image (69).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (69) (1).png" alt=""><figcaption></figcaption></figure>
 
 打开Burp Suite，然后单击网页上的Lookup。 现在我们可以修改POST请求：
 
-<figure><img src="../../.gitbook/assets/image (70).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (70) (1).png" alt=""><figcaption></figcaption></figure>
 
 我这里执行了一个cat /etc/passwd命令，没问题，接下来反弹shell，将要执行的命令改成下面这个
 

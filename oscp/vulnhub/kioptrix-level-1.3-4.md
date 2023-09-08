@@ -4,19 +4,19 @@
 
 这个靶机首先需要新建一个空白的磁盘
 
-<figure><img src="../../.gitbook/assets/image (41).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (45).png" alt=""><figcaption></figcaption></figure>
 
 这里参数配置好以后点完成就好
 
-<figure><img src="../../.gitbook/assets/image (19).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (23).png" alt=""><figcaption></figcaption></figure>
 
 将下载好的靶机重命名为MS-DOS.vmdk
 
-<figure><img src="../../.gitbook/assets/image (13).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (17).png" alt=""><figcaption></figcaption></figure>
 
 然后将重命名的靶机替换掉新建虚拟机(E:\Users\NTMD\Documents\Virtual Machines\MS-DOS)中原来的文件就可以了
 
-<figure><img src="../../.gitbook/assets/image (57).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (61).png" alt=""><figcaption></figcaption></figure>
 
 完成以后开机就可以了
 
@@ -65,11 +65,11 @@ Host script results:
 
 发现目标开放了22和80端口，先访问一下80
 
-<figure><img src="../../.gitbook/assets/image (6).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (10).png" alt=""><figcaption></figcaption></figure>
 
 是一个登录页面，没有登录凭证，先尝试一下万能密码 ' or 1=1 #
 
-<figure><img src="../../.gitbook/assets/image (54).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (58).png" alt=""><figcaption></figcaption></figure>
 
 这里提示需要一个正确的本地用户，使用gobuster对目标进行一个目录扫描，看看有没有有用的信息
 
@@ -108,17 +108,17 @@ Progress: 20044 / 20470 (97.92%)
 
 发现/john和/robert目录，查看一下这两个目录
 
-<figure><img src="../../.gitbook/assets/image (62).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (66).png" alt=""><figcaption></figcaption></figure>
 
-<figure><img src="../../.gitbook/assets/image (12).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (16).png" alt=""><figcaption></figcaption></figure>
 
 点击这两个php文件会跳转到登录页面，说明这两个很有可能是用户名，将用户名john和robert输入到用户名，密码框输入 ' or 1=1 #
 
-<figure><img src="../../.gitbook/assets/image (53).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (57).png" alt=""><figcaption></figcaption></figure>
 
 这里出现了john用户的密码MyNameIsJohn，让我们来看看另外一个用户
 
-<figure><img src="../../.gitbook/assets/image (43).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (47).png" alt=""><figcaption></figcaption></figure>
 
 这看起来像是base64编码，我们尝试一下解码
 
@@ -158,15 +158,15 @@ john:~$ cat /etc/passwd
 
 回想一下我们对 Web 服务器的枚举，我们可以猜测应用程序在成功登录时将 /john/john.php 文件包含到 member.php 文件中。 这将是测试 LFI 的一个好点。 用户名参数似乎是需要检查的地方。
 
-<figure><img src="../../.gitbook/assets/image (11).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (15).png" alt=""><figcaption></figcaption></figure>
 
 首先，我们可以尝试读取该/etc/passwd文件。尝试一下网址http://192.168.23.133/member.php?username=../../etc/passwd：
 
-<figure><img src="../../.gitbook/assets/image (32).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (36).png" alt=""><figcaption></figcaption></figure>
 
 它把etc给删除掉了，我们尝试一下双写http://192.168.23.133/member.php?username=../../eetctc/passwd
 
-<figure><img src="../../.gitbook/assets/image (59).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (63).png" alt=""><figcaption></figcaption></figure>
 
 因此应用程序将附加.php到文件名中。如果我们考虑用户名在原始 URL 中的使用方式，这是有道理的。也许我们可以使用空字节注入来绕过这个问题。
 
