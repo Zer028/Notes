@@ -10,6 +10,7 @@
     * [Format](readme/hackthebox/format.md)
     * [MonitorsTwo](readme/hackthebox/monitorstwo.md)
   * [Vulnhub](oscp/vulnhub/README.md)
+    * [Tomato](readme/vulnhub/tomato.md)
     * [DC-6](oscp/vulnhub/dc-6.md)
     * [Vulnix](readme/vulnhub/vulnix.md)
     * [Vulnos](oscp/vulnhub/vulnos.md)
