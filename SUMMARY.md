@@ -9,6 +9,7 @@
   * [HTB](oscp/hackthebox.md)
     * [Format](readme/hackthebox/format.md)
     * [MonitorsTwo](readme/hackthebox/monitorstwo.md)
+    * [Jupiter](readme/hackthebox/jupiter.md)
   * [Vulnhub](oscp/vulnhub/README.md)
     * [Tomato](readme/vulnhub/tomato.md)
     * [DC-6](oscp/vulnhub/dc-6.md)
