@@ -25,6 +25,18 @@ Qv2ray和v2ray下载编译好的不要下载源码，将v2ray放到Qv2ray的安�
 
 <figure><img src="../.gitbook/assets/image (2).png" alt=""><figcaption></figcaption></figure>
 
+首选项连接设置
+
+<figure><img src="../.gitbook/assets/image (96).png" alt=""><figcaption></figcaption></figure>
+
+首选项入站设置
+
+<figure><img src="../.gitbook/assets/image (97).png" alt=""><figcaption></figcaption></figure>
+
+首选项常规设置
+
+<figure><img src="../.gitbook/assets/image (98).png" alt=""><figcaption></figcaption></figure>
+
 #### Proxifier配置
 
 选择Proxy Servers，add一个代理，1089是v2ray的socks代理端口，可自行修改保存和v2ray一致就行
