@@ -88,10 +88,11 @@ apt install stubby
 vim /etc/stubby/stubby.yml
 ```
 
-#### 3. 将 \`stubby\` 设置为开机自启动
+#### 3. 将**`stubby`**设置为开机自启动
 
 ```
 systemctl enable stubby
+systemctl start stubby #启动服务
 ```
 
 4. **修改网络配置文件：**
