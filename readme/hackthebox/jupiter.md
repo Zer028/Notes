@@ -51,7 +51,7 @@ Nmap done: 1 IP address (1 host up) scanned in 32.65 seconds
 
 没有看到什么有用的信息，我们先访问一下它的80端口
 
-<figure><img src="../../.gitbook/assets/image (2).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (2) (1).png" alt=""><figcaption></figcaption></figure>
 
 没有可以利用的点，如果我们通过模糊测试来发现路由，我们将不会发现任何有趣的东西，但是如果我们对可能的子域进行模糊测试，我们会发现kiosk.jupiter.htb的这个子域名。
 
@@ -84,7 +84,7 @@ Requests/sec.: 0
 
 
 
-<figure><img src="../../.gitbook/assets/image (3).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (3) (1).png" alt=""><figcaption></figcaption></figure>
 
 ```
 127.0.0.1       localhost
@@ -99,7 +99,7 @@ ff02::2         ip6-allrouters
 
 
 
-<figure><img src="../../.gitbook/assets/image (4).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (4) (1).png" alt=""><figcaption></figcaption></figure>
 
 Grafana 有一个 API，这很有趣，因为通常会收集大量信息。（[数据源API](https://grafana.com/docs/grafana/latest/developers/http\_api/data\_source/)）如果我们提出请求，/api/datasources我们将获得以下信息：
 
@@ -158,7 +158,7 @@ Content-Type: application/json
 
 我们观察HTTPhistory，发现这个请求包，把它发送到重放模块
 
-<figure><img src="../../.gitbook/assets/image (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 将 rawSql 参数值更改为并发送请求
 
