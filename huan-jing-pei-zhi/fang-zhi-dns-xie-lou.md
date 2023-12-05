@@ -57,4 +57,95 @@ v2ray.exe; v2ctl.exe; wv2ray.exe; qv2ray.exe
 
 ### 环境准备
 
-工具
+在Linux中防止DNS泄露可以使用DNS over HTTPS（DoH）或DNS over TLS（DoT）来加密DNS流量，我这里先介绍DNS over TLS（DoT）来加DNS流量
+
+DNS over HTTPS（DoH）和DNS over TLS（DoT）的主要区别：
+
+1. **传输协议：**
+   * **DoH：** 使用HTTP协议。
+   * **DoT：** 使用TLS协议。
+2. **端口：**
+   * **DoH：** 默认端口是443（HTTPS）。
+   * **DoT：** 默认端口是853。
+3. **集成方式：**
+   * **DoH：** 更容易与Web浏览器集成，通过浏览器或操作系统设置启用。
+   * **DoT：** 需要在DNS客户端和服务器之间建立专用的TLS连接，通常需要在操作系统或应用程序层面进行配置。
+4. **可用性：**
+   * **DoH：** 更容易穿越防火墙，有更广泛的支持。
+   * **DoT：** 可能在某些网络环境中受到阻碍，但提供更直接的DNS安全，因为使用专用端口和TLS协议。
+
+选择使用DoH或DoT取决于网络环境和个人偏好。 DoH更易于部署，而DoT提供更直接的DNS安全。
+
+1. **安装 `stubby`：**
+
+```
+apt install stubby
+```
+
+2. **编辑 `stubby` 配置文件：**
+
+```
+vim /etc/stubby/stubby.yml
+```
+
+#### 3. 将 \`stubby\` 设置为开机自启动
+
+```
+systemctl enable stubby
+```
+
+4. **修改网络配置文件：**
+
+```
+vim /etc/NetworkManager/NetworkManager.conf
+```
+
+在\[main]的下方加入
+
+```
+dns=none
+```
+
+保持文件后，重启网络管理器
+
+```
+systemctl restart NetworkManager
+```
+
+5. 查看/etc/stubby/stubby.yml这个配置文件并编辑/etc/resolv.conf这个DNS 配置文件
+
+```
+cat /etc/stubby/stubby.yml
+vim /etc/resolv.conf
+```
+
+<figure><img src="../.gitbook/assets/image (93).png" alt=""><figcaption></figcaption></figure>
+
+这里是将stubby的ipv4和ipv6加入到了系统的DNS配置文件当中，由于kali系统启用ipv6，所以同样也需要加入到配置文件，除非不用它
+
+resolv.conf这个文件包含了用于域名解析的DNS服务器信息，注意：每次vim resolv.conf这个文件的时候退出都必须wq 保存退出，q退出会导致这个文件回复默认配置
+
+修改完成后建议查看一下配置文件有没有修改成功
+
+```
+┌──(root㉿kali)-[~]
+└─# cat /etc/resolv.conf
+domain localdomain
+search localdomain
+nameserver 145.100.185.15
+nameserver 145.100.185.16
+nameserver 185.49.141.37
+nameserver 2001:610:1:40ba:145:100:185:15
+nameserver 2001:610:1:40ba:145:100:185:16
+nameserver 2a04:b900:0:100::38
+nameserver 8.8.8.8
+nameserver 1.1.1.1
+nameserver 192.168.152.2
+
+```
+
+我们去DNS泄露网站查询一下我们配置完成之后的DNS 有没有泄露
+
+<figure><img src="../.gitbook/assets/image (94).png" alt=""><figcaption></figcaption></figure>
+
+<figure><img src="../.gitbook/assets/image (95).png" alt=""><figcaption></figcaption></figure>
