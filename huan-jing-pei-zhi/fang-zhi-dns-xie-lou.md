@@ -143,17 +143,20 @@ resolv.conf这个文件包含了用于域名解析的DNS服务器信息，注意
 ```
 ┌──(root㉿kali)-[~]
 └─# cat /etc/resolv.conf
-domain localdomain
-search localdomain
+#domain localdomain
+#search localdomain
 #nameserver 145.100.185.15
 nameserver 145.100.185.16
-nameserver 1.1.1.1
+#nameserver 199.58.81.218
 nameserver 89.234.186.112
-#nameserver 2001:610:1:40ba:145:100:185:15
-#nameserver 2001:610:1:40ba:145:100:185:16
-nameserver 2001:470:1c:76d::53
-#nameserver 8.8.8.8
-nameserver 192.168.5.2
+nameserver 1.1.1.1
+nameserver 2001:610:1:40ba:145:100:185:16
+nameserver 2001:610:1:40ba:145:100:185:15
+#nameserver 192.168.5.2
+
+┌──(root㉿kali)-[~]
+└─# chattr +i /etc/resolv.conf  #将文件设置为不可修改
+    chattr -i /etc/resolv.conf  #要解锁文件
 ```
 
 我们去DNS泄露网站查询一下我们配置完成之后的DNS 有没有泄露
