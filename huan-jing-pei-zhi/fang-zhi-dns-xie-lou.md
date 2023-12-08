@@ -145,16 +145,15 @@ resolv.conf这个文件包含了用于域名解析的DNS服务器信息，注意
 └─# cat /etc/resolv.conf
 domain localdomain
 search localdomain
-nameserver 145.100.185.15
+#nameserver 145.100.185.15
 nameserver 145.100.185.16
-nameserver 185.49.141.37
-nameserver 2001:610:1:40ba:145:100:185:15
-nameserver 2001:610:1:40ba:145:100:185:16
-nameserver 2a04:b900:0:100::38
-nameserver 8.8.8.8
 nameserver 1.1.1.1
-nameserver 192.168.152.2
-
+nameserver 89.234.186.112
+#nameserver 2001:610:1:40ba:145:100:185:15
+#nameserver 2001:610:1:40ba:145:100:185:16
+nameserver 2001:470:1c:76d::53
+#nameserver 8.8.8.8
+nameserver 192.168.5.2
 ```
 
 我们去DNS泄露网站查询一下我们配置完成之后的DNS 有没有泄露
