@@ -124,3 +124,63 @@ Gobuster
   -q, --quiet                         不打印横幅和其他噪音
 ```
 
+curl
+
+```
+# 基本用法
+curl [options...] <url>
+
+# 连接选项
+--abstract-unix-socket <path>          使用抽象的Unix域套接字连接
+--alt-svc <file name>                  启用带有此缓存文件的alt-svc
+--anyauth                              选择任意身份验证方法
+-E, --cert <certificate[:password]>   客户端证书文件和密码
+--cert-status                          验证服务器证书的状态通过OCSP-staple
+--cert-type <type>                     证书类型（DER/PEM/ENG/P12）
+--ciphers <list of ciphers>            要使用的SSL密码
+--compressed                           请求压缩的响应
+--compressed-ssh                       启用SSH压缩
+-K, --config <file>                    从文件中读取配置
+--connect-timeout <fractional seconds> 允许的最长连接时间
+--connect-to <HOST1:PORT1:HOST2:PORT2>  连接到主机
+
+# 上传选项
+-a, --append                           上传时追加到目标文件
+-d, --data <data>                      HTTP POST数据
+--data-ascii <data>                    HTTP POST ASCII数据
+--data-binary <data>                   HTTP POST二进制数据
+--data-raw <data>                      HTTP POST数据，'@'允许
+--data-urlencode <data>                HTTP POST数据进行URL编码
+
+# 身份验证选项
+--aws-sigv4 <provider1[:provider2[:region[:service]]]>  使用AWS V4签名身份验证
+--basic                                使用HTTP基本身份验证
+--digest                               使用HTTP摘要身份验证
+--ntlm                                 使用HTTP NTLM身份验证
+--ntlm-wb                              使用HTTP NTLM身份验证与winbind
+--oauth2-bearer <token>                OAuth 2 Bearer Token
+
+# 输出选项
+-o, --output <file>                    写入文件而不是stdout
+--output-dir <dir>                     保存文件的目录
+
+# 代理选项
+-x, --proxy [protocol://]host[:port]    使用此代理
+--proxy-anyauth                        选择任意代理身份验证方法
+--proxy-basic                          在代理上使用基本身份验证
+--proxy-ssl-ccc                        在身份验证后发送CCC
+-P, --ftp-port <address>               使用PORT而不是PASV
+--proxy1.0 <host[:port]>               使用给定端口上的HTTP/1.0代理
+--proxytunnel                          通过HTTP代理隧道运行
+
+# 其他选项
+-H, --header <header/@file>            将自定义头传递到服务器
+-i, --include                          在输出中包含协议响应头
+-k, --insecure                         允许不安全的服务器连接
+-L, --location                         跟随重定向
+--max-redirs <num>                     允许的最大重定向次数
+--retry <num>                          如果发生暂时性问题，则重试请求
+-s, --silent                           静默模式，不输出信息
+-v, --verbose                          使操作更具描述性
+-X                                     用于指定 HTTP 请求的方法。
+```
