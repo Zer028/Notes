@@ -19,11 +19,11 @@ DNS泄露可能对用户隐私构成风险，因为攻击者可以利用这些�
 
 Qv2ray和v2ray下载编译好的不要下载源码，将v2ray放到Qv2ray的安装目录下，先安装Qv2ray，然后在首选项中配置核心路径，也可以用Clsh for windows 代替v2ray效果是一样的
 
-<figure><img src="../.gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (2).png" alt=""><figcaption></figcaption></figure>
 
 再进入到分组选项的订阅设置，订阅地址需要自行购买，订阅类型选择这个Base64的，然后更新订阅OK保存就可以了
 
-<figure><img src="../.gitbook/assets/image (2).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (2) (1).png" alt=""><figcaption></figcaption></figure>
 
 首选项连接设置
 

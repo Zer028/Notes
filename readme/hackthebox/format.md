@@ -77,11 +77,11 @@ Service detection performed. Please report any incorrect results at https://nmap
 
 我们可以看到，这是一个 XSS Stored
 
-<figure><img src="../../.gitbook/assets/image (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (1) (1) (1) (2).png" alt=""><figcaption></figcaption></figure>
 
 我们尝试从子域的 TXT 记录捕获请求并尝试执行 LFI，_id_字段容易受到 LFI 的攻击，我们发现了 2 个用户：**cooper**和**git**
 
-<figure><img src="../../.gitbook/assets/image (2) (1) (2).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (2) (1) (2) (1).png" alt=""><figcaption></figcaption></figure>
 
 我们通过端口3000访问网络，它是一个Gitea，用户**Cooper**有一个存储库。正如我们在图片中看到的，这些是网站文件和子域，因此我们查看代码以查找漏洞。
 
