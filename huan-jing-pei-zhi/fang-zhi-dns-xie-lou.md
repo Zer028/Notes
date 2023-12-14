@@ -19,11 +19,11 @@ DNS泄露可能对用户隐私构成风险，因为攻击者可以利用这些�
 
 Qv2ray和v2ray下载编译好的不要下载源码，将v2ray放到Qv2ray的安装目录下，先安装Qv2ray，然后在首选项中配置核心路径，也可以用Clsh for windows 代替v2ray效果是一样的
 
-<figure><img src="../.gitbook/assets/image (2).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (2) (1).png" alt=""><figcaption></figcaption></figure>
 
 再进入到分组选项的订阅设置，订阅地址需要自行购买，订阅类型选择这个Base64的，然后更新订阅OK保存就可以了
 
-<figure><img src="../.gitbook/assets/image (2) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (2) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 首选项连接设置
 
@@ -41,11 +41,11 @@ Qv2ray和v2ray下载编译好的不要下载源码，将v2ray放到Qv2ray的安�
 
 选择Proxy Servers，add一个代理，1089是v2ray的socks代理端口，可自行修改保存和v2ray一致就行
 
-<figure><img src="../.gitbook/assets/image (3).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (3) (1).png" alt=""><figcaption></figcaption></figure>
 
 选择Proxification  Rules配置代理规则，按照如下配置
 
-<figure><img src="../.gitbook/assets/image (4).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (4) (1).png" alt=""><figcaption></figcaption></figure>
 
 将Vmware所有流量都走代理，防止流量偷跑
 

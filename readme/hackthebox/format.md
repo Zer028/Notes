@@ -55,7 +55,7 @@ Service detection performed. Please report any incorrect results at https://nmap
 
 在端口 3000 上，它将我们重定向到microblog.htb域，因此我们将其添加到 /etc/hosts, 如果我们尝试通过端口 80 访问该网站，它会将我们重定向到app.microblog.htb子域，因此我们也添加它,我们访问主网站，在本例中是子域。
 
-<figure><img src="../../.gitbook/assets/image (4) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (4) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 我们在网站上注册，创建一个子域并将其添加到/etc/hosts。
 
@@ -77,7 +77,7 @@ Service detection performed. Please report any incorrect results at https://nmap
 
 我们可以看到，这是一个 XSS Stored
 
-<figure><img src="../../.gitbook/assets/image (1) (1) (1) (2).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (1) (1) (1) (2) (1).png" alt=""><figcaption></figcaption></figure>
 
 我们尝试从子域的 TXT 记录捕获请求并尝试执行 LFI，_id_字段容易受到 LFI 的攻击，我们发现了 2 个用户：**cooper**和**git**
 
@@ -85,7 +85,7 @@ Service detection performed. Please report any incorrect results at https://nmap
 
 我们通过端口3000访问网络，它是一个Gitea，用户**Cooper**有一个存储库。正如我们在图片中看到的，这些是网站文件和子域，因此我们查看代码以查找漏洞。
 
-<figure><img src="../../.gitbook/assets/image (3) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (3) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 在第25行和第35行之间我们可以发现这部分代码非常有趣。我们可以看到，如果_isPro_条件为_True_，那么我们可以上传某种类型的文件，尽管它们可能只是图像。无论如何，我们必须成为_专业人士_才能将文件上传到网络。
 

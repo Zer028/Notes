@@ -65,7 +65,7 @@ nikto扫描一下看看有没有什么有用的信息
 
 {% embed url="https://sploitus.com/" %}
 
-<figure><img src="../../.gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (4).png" alt=""><figcaption></figcaption></figure>
 
 我们尝试一下SQL注入这个模块
 
@@ -157,7 +157,7 @@ uid=33(www-data) gid=33(www-data) groups=33(www-data)
 
 生成shell的时候我们选择以下选项，有时候生成的shell不能成功反弹，我们可以尝试一下其它的payload
 
-<figure><img src="../../.gitbook/assets/image (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 本地监听6666端口，然后反弹shell
 
