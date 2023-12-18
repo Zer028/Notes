@@ -1,6 +1,6 @@
 # MonitorsTwo
 
-<figure><img src="../../.gitbook/assets/image (2) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (2) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 ### 目标探测
 
@@ -52,7 +52,7 @@ Service detection performed. Please report any incorrect results at https://nmap
 
 这里没有什么有用的东西，先访问目标80端口看看
 
-<figure><img src="../../.gitbook/assets/image (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 ### 漏洞利用
 

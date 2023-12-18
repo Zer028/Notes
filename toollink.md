@@ -184,3 +184,59 @@ curl [options...] <url>
 -v, --verbose                          使操作更具描述性
 -X                                     用于指定 HTTP 请求的方法。
 ```
+
+Amas
+
+```
+# Usage: amass enum [options] -d DOMAIN
+
+# 参数用法说明:
+  -active                      尝试区域传输和证书名称获取
+  -addr value                  以逗号分隔的IP和范围（192.168.1.1-254）
+  -alts                        启用生成变体名称
+  -asn value                   以逗号分隔的ASN（可多次使用）
+  -aw value                    用于变体的不同字典文件的路径
+  -awm value                   用于名称变体的"hashcat-style"字典掩码
+  -bl value                    不进行调查的子域名的黑名单
+  -blf string                  提供黑名单子域名的文件路径
+  -brute                       在搜索后执行暴力破解
+  -cidr value                  以逗号分隔的CIDR（可多次使用）
+  -config string               YAML配置文件的路径（有关更多细节，请参见下文）
+  -d value                     以逗号分隔的域名（可多次使用）
+  -demo                        屏蔽输出以适用于演示
+  -df value                    提供根域名的文件路径
+  -dir string                  包含输出文件的目录路径
+  -dns-qps int                 所有解析器上的每秒最大DNS查询数
+  -ef string                   提供要排除的数据源的文件路径
+  -exclude value               以逗号分隔的要排除的数据源名称
+  -h                           显示程序使用消息
+  -help                        显示程序使用消息
+  -if string                   提供要包含的数据源的文件路径
+  -iface string                提供发送流量的网络接口
+  -include value               以逗号分隔的要包含的数据源名称
+  -list                        打印所有可用数据源的名称
+  -log string                  错误将写入的日志文件路径
+  -max-depth int               暴力破解的子域标签的最大数量
+  -max-dns-queries int         在版本4.0中将由dns-qps替代的不推荐使用的标志
+  -min-for-recursive int       递归暴力破解之前看到的子域标签数（默认：1）
+  -nf value                    提供已知子域名（来自其他工具/来源）的文件路径
+  -nocolor                     禁用彩色输出
+  -norecursive                 关闭递归暴力破解
+  -o string                    包含终端stdout/stderr的文本文件路径
+  -oA string                   用于命名所有输出文件的路径前缀
+  -p value                     以逗号分隔的端口（默认：80, 443）
+  -passive                     自版本以来已弃用，默认为被动设置
+  -r value                     不受信任的DNS解析器的IP地址（可多次使用）
+  -rf value                    提供不受信任的DNS解析器的文件路径
+  -rqps int                    每个不受信任的解析器的每秒最大DNS查询数
+  -scripts string               包含ADS脚本的目录路径
+  -silent                      在执行期间禁用所有输出
+  -timeout int                 在退出之前运行的枚举分钟数
+  -tr value                    受信任的DNS解析器的IP地址（可多次使用）
+  -trf value                   提供受信任的DNS解析器的文件路径
+  -trqps int                   每个受信任的解析器的每秒最大DNS查询数
+  -v                           输出状态/调试/故障排除信息
+  -w value                     用于暴力破解的不同字典文件的路径
+  -wm value                    用于DNS暴力破解的"hashcat-style"字典掩码
+
+```
