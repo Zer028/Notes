@@ -12,6 +12,7 @@
       * [MonitorsTwo](readme/htb/hackthebox/monitorstwo.md)
       * [Jupiter](readme/htb/hackthebox/jupiter.md)
   * [Vulnhub](oscp/vulnhub/README.md)
+    * [DC-5](readme/vulnhub/dc-5.md)
     * [DC-2](readme/vulnhub/dc-2.md)
     * [DC-1](readme/vulnhub/dc-1.md)
     * [SickOS 1.2](readme/vulnhub/sickos-1.2.md)
