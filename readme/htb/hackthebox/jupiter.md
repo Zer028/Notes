@@ -84,7 +84,7 @@ Requests/sec.: 0
 
 
 
-<figure><img src="../../../.gitbook/assets/image (3) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (3) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 ```
 127.0.0.1       localhost
@@ -99,7 +99,7 @@ ff02::2         ip6-allrouters
 
 
 
-<figure><img src="../../../.gitbook/assets/image (4) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../../.gitbook/assets/image (4) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 Grafana 有一个 API，这很有趣，因为通常会收集大量信息。（[数据源API](https://grafana.com/docs/grafana/latest/developers/http\_api/data\_source/)）如果我们提出请求，/api/datasources我们将获得以下信息：
 

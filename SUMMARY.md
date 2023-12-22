@@ -40,6 +40,7 @@
     * [CVE-2016-4437](framework-loopholes/shiro-deserializati/cve-2016-4437.md)
   * [Untitled](framework-loopholes/untitled.md)
 * [环境配置](huan-jing-pei-zhi/README.md)
+  * [Debian安装nessus破解版](huan-jing-pei-zhi/debian-an-zhuang-nessus-po-jie-ban.md)
   * [防止DNS泄露](huan-jing-pei-zhi/fang-zhi-dns-xie-lou.md)
 * [工具帮助文档](toollink.md)
 * [Shell编程从入门到精通](shell-bian-cheng-cong-ru-men-dao-jing-tong/README.md)

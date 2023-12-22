@@ -38,11 +38,11 @@ Nmap done: 1 IP address (1 host up) scanned in 12.00 seconds
 
 先访问一下80端口,有一个提交表单&#x20;
 
-<figure><img src="../../.gitbook/assets/image (5).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (5) (1).png" alt=""><figcaption></figcaption></figure>
 
 将表单提交，注意观察Copyright ©这部分有变化，
 
-<figure><img src="../../.gitbook/assets/image (4).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (4) (1).png" alt=""><figcaption></figcaption></figure>
 
 说明是有参数能控制的，我们模糊测试一下
 
@@ -71,11 +71,11 @@ Requests/sec.: 782.0527
 
 跑出了file这个隐藏的参数 看看是否有LFI漏洞
 
-<figure><img src="../../.gitbook/assets/image (6).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (6) (1).png" alt=""><figcaption></figcaption></figure>
 
 Nmap的扫描结果可以看到是nginx,尝试能否访问到它的日志文件
 
-<figure><img src="../../.gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (8).png" alt=""><figcaption></figcaption></figure>
 
 我们可以采用日志文件投毒的方式来获取shell，先往日志文件中写一个php木马
 
@@ -85,7 +85,7 @@ Nmap的扫描结果可以看到是nginx,尝试能否访问到它的日志文件
 
 我们看看能否执行命令
 
-<figure><img src="../../.gitbook/assets/image (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../../.gitbook/assets/image (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 没什么问题，生成一个反弹shell
 
