@@ -152,11 +152,11 @@ Incoming这个目录下有个文件将它下载下来查看 ，Outgoing这个目
 
 <figure><img src="../../../.gitbook/assets/image (109).png" alt=""><figcaption></figcaption></figure>
 
-除了/wordpress这个目录还有第一个flag，我们访问wordpress这个目录
+除了/wordpress这个目录还有第一个flag，我们访问wordpress这个目录，我查看了一下网页源代码，
 
+在\` [http://10.10.110.100:65000/wordpress/index.php/wp-json/](http://10.10.110.100:65000/wordpress/index.php/wp-json/) \`  这个链接中有一些接口，拼接以后似乎没找到什么有用的信息
 
-
-wpscan扫描一下
+接下来尝试一下wpscan扫描
 
 ```
 ┌──(root㉿kali)-[~/Desktop/test/Dante]
@@ -273,11 +273,73 @@ Interesting Finding(s):
 
 ```
 
+有两个用户名，还有WordPress version 5.4.1 的版本信息，查找一下这个版本有没有什么漏洞
 
+```
+┌──(root㉿kali)-[~/Desktop/test/Dante]
+└─# searchsploit wordpress 5.4.1
+-------------------------------------------------------------------------------------------------------------------------- ---------------------------------
+ Exploit Title                                                                                                            |  Path
+-------------------------------------------------------------------------------------------------------------------------- ---------------------------------
+WordPress Plugin Form Maker 5.4.1 - 's' SQL Injection (Authenticated)                                                     | php/webapps/48509.txt
+```
 
+有一个sql注入漏洞，通过复现发现这个其实并不存在，在网页源代码中有/wordpress/wp-includes/wlwmanifest.xml这样一个文件我们访问一下它
 
+```
+This XML file does not appear to have any style information associated with it. The document tree is shown below.
+<manifest xmlns="http://schemas.microsoft.com/wlw/manifest/weblog">
+<options>
+<clientType>WordPress</clientType>
+<supportsKeywords>Yes</supportsKeywords>
+<supportsGetTags>Yes</supportsGetTags>
+</options>
+<weblog>
+<serviceName>WordPress</serviceName>
+<imageUrl>images/wlw/wp-icon.png</imageUrl>
+<watermarkImageUrl>images/wlw/wp-watermark.png</watermarkImageUrl>
+<homepageLinkText>View site</homepageLinkText>
+<adminLinkText>Dashboard</adminLinkText>
+<adminUrl>
+<![CDATA[ {blog-postapi-url}/../wp-admin/ ]]>
+</adminUrl>
+<postEditingUrl>
+<![CDATA[ {blog-postapi-url}/../wp-admin/post.php?action=edit&post={post-id} ]]>
+</postEditingUrl>
+</weblog>
+<buttons>
+<button>
+<id>0</id>
+<text>Manage Comments</text>
+<imageUrl>images/wlw/wp-comments.png</imageUrl>
+<clickUrl>
+<![CDATA[ {blog-postapi-url}/../wp-admin/edit-comments.php ]]>
+</clickUrl>
+</button>
+</buttons>
+</manifest>
+```
 
-生成一个密码字典
+这是一个xml格式的文件，里面有个/wp-admin/的路径可以拼接，我们访问一下，是个登录页面
+
+<figure><img src="../../../.gitbook/assets/image (2).png" alt=""><figcaption></figcaption></figure>
+
+同时在网站的Meet The Team这个页面有几名工程师的姓名
+
+<figure><img src="../../../.gitbook/assets/image (3).png" alt=""><figcaption></figcaption></figure>
+
+我们将收集到的用户名保存成一个文件
+
+```
+nathan
+aj
+balthazar
+kevin
+james
+admin
+```
+
+再生成一个密码字典
 
 ```
 ┌──(root㉿kali)-[~/Desktop/test/Dante]
@@ -299,3 +361,7 @@ Trying admin / Posts Time: 00:07:01 <===========================================
 ```
 
 成功爆破出james 的密码 Toyota
+
+<figure><img src="../../../.gitbook/assets/image (4).png" alt=""><figcaption></figcaption></figure>
+
+成功登录了我们看看能否执行一些操作，几个地方的文件上次都不行，主题编辑中找到一个404.php的文件，这个文件是可以被编辑的
