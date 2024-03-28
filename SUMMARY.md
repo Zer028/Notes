@@ -43,6 +43,7 @@
     * [CVE-2016-4437](framework-loopholes/shiro-deserializati/cve-2016-4437.md)
   * [Untitled](framework-loopholes/untitled.md)
 * [环境配置](huan-jing-pei-zhi/README.md)
+  * [OCR图标验证码识别](huan-jing-pei-zhi/ocr-tu-biao-yan-zheng-ma-shi-bie.md)
   * [Debian安装nessus破解版](huan-jing-pei-zhi/debian-an-zhuang-nessus-po-jie-ban.md)
   * [防止DNS泄露](huan-jing-pei-zhi/fang-zhi-dns-xie-lou.md)
 * [工具帮助文档](toollink.md)
