@@ -33,3 +33,4 @@ Content-Length: 8332
 <@BASE64><@IMG_RAW></@IMG_RAW></@BASE64>
 ```
 
+<figure><img src="../.gitbook/assets/image (112).png" alt=""><figcaption></figcaption></figure>
